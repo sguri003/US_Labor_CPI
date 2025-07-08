@@ -13,7 +13,6 @@ from Power_Delivery import Power_Delivery
 from US_Labor_Force import US_Labor_Force
 from Lumber import US_Lumber
 
-
 # @params API Key, Export_File, Series ID, start year, and year
 # CUSR0000SA0 - All items in U.S. city average, all urban consumers, seasonally adjusted
 # CUSR0000SETB01 - Gasoline (all types) in U.S. city average, all urban consumers, seasonally adjusted
@@ -25,9 +24,9 @@ BLS_API_KEY = df_ky['BLS_API'][0]
 #bls_dt = labor_US(BLS_API_KEY, 'POWER DELIVER SG.CSV' , ['IPUCN2211__T051000000', 'IPUCN2211__T011000000'], 2000, 2022 )
 #CPI for Gas, Groceries, necessities. 
 #CPI-->CUSR0000SA0 ALL URBAN AREAS
-bls_dt = CPI_Puller(BLS_API_KEY, 'CPI_2006_MTD.csv',
+bls_dt = CPI_Puller(BLS_API_KEY, 'CPI_2019-MTD.csv',
                         ['CUSR0000SA0', 'CUSR0000SETB01', 'CUSR0000SAF1', 'CUSR0000SETA02']
-                        , 2006, 2025)
+                        , 2019, 2025)
 Power_Delivery = Power_Delivery(BLS_API_KEY, 'POWER_SECTOR_OUTPUT.csv'
                                 ,['IPUCN2211__T051000000', 'IPUCN2211__T011000000']
                                 , 2006, 2025 )
