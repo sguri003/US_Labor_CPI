@@ -61,7 +61,7 @@ class CPI_Puller:
                     annual_pct_chg = pct_changes['12']
                     # Create a month field in the format of a date for 
                     # the first day of each month (for example: January 1, 2022).
-                    month = period_name + ' 1, ' + year
+                    month = period_name + ' 1 ' + year
                     #Write the CSV record to the output file.
                     d_wrtr.writerow([series_id, month, value, annual_pct_chg])
         #place in dataframe format from

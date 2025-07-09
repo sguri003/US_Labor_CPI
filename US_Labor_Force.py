@@ -8,7 +8,10 @@ import json
 import csv
 import requests
 import numpy as np    
-import pandas as pd      
+import pandas as pd     
+import matplotlib.pylab as plt
+import re
+
 
 
 class US_Labor_Force:
@@ -40,7 +43,7 @@ class US_Labor_Force:
         #open file to be written to CSV. 
         with open(self.out_file_nm, mode = 'w', newline = '') as data_file:
             #Series ID is category such as Gasoline, Groceries. 
-            fieldnames = ['Series ID', 'Year', 'Value', 'Annual Percent Change']
+            fieldnames = ['Series ID', 'Date', 'Value', 'Annual Percent Change']
             d_wrtr = csv.writer(data_file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_ALL)
             #Place Headers
             d_wrtr.writerow(fieldnames)
@@ -58,14 +61,23 @@ class US_Labor_Force:
                     annual_pct_chg = pct_changes['12']
                     # Create a month field in the format of a date for 
                     # the first day of each month (for example: January 1, 2022).
-                    month = period_name + ' 1, ' + year
+                    month = period_name + ' 1 ' + year
                     #Write the CSV record to the output file.
                     d_wrtr.writerow([series_id, month, value, annual_pct_chg])
         #Write into data frame format.
         dt = pd.read_csv(self.out_file_nm)
         df = pd.DataFrame(data=dt)
-        df.to_csv('Active_Workers_test.csv')
-        print(df)
+        df['Date'] = pd.to_datetime(df['Date'], format="mixed")
+        df.to_csv('Active_Testing.csv')
+        #rows ans columns
+        print(df.columns)
+        print(df.info())
+        df_plt = df[['Date', 'Value']]
+        df_plt.plot()
+        plt.show()
+        
+        
+
         
         
     
