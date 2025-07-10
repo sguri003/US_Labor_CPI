@@ -2,27 +2,12 @@ import os
 import json
 import requests
 import csv
-jsonString = '{ "id": 121, "name": "Naveen", "course": "MERN Stack"}'
-FILE_NM = 'DICT_OUT.CSV'
-#blank dictionary
-#open file
-def str_json_meth():
-    with open('json_ex.json', 'r') as f:  
-        #load into dictionary
-    #    my_dict = json.load(f)
-    #    print(my_dict[0])
-        #get string
-        obj_json = json.loads(f.read())   
-        print(obj_json['glossary']['title'])
-        title_dict = obj_json['glossary']['title']
-        print(title_dict)
-        print(type(title_dict))
+import json
+import numpy as np              
+import pandas as pd         
 
-def json_dict():
-    my_dict = {}
-    with open('json_ex.json', 'r') as f:
-        my_dict = json.load(f)
-        print(my_dict['glossary']['title'])
+FILE_NM = 'states.json'
+
 #states example
 #git==>https://github.com/CoreyMSchafer/code_snippets/blob/master/Python-JSON/json_demo.py      
 def read_st():
@@ -52,7 +37,24 @@ def read_st():
         for key in my_dict:
             writer.writerow({'name': key, 'area_code': my_dict[key]})
         
-
-read_st()
+def read_j():
+    if os.path.exists('state_format.json'):
+        os.remove('state_format.json')
+        print('File exists writing JSON dump')
+    else:
+        print("No file created")
+    my_d = {}
+    with open('states.json' ,'r') as st_j:
+        my_d = json.load(st_j)
+        #print(my_d)
+    with open('state_format.json' , 'w') as j_df:
+        json.dump(my_d,j_df, indent=4, sort_keys=False)
+    
+    dt = pd.read_json('states.json')
+    dt_jFrame = pd.DataFrame(data=dt)
+    print(dt_jFrame)
+    
+read_j()
+#read_st()
     
 
