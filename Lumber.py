@@ -64,5 +64,6 @@ class US_Lumber:
         #Write into data frame format.
         dt = pd.read_csv(self.out_file_nm)
         df = pd.DataFrame(data=dt)
+        df.to_csv('DataFrame_Lumber.csv')
         print(df)
     
