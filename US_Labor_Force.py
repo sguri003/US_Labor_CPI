@@ -70,11 +70,11 @@ class US_Labor_Force:
         df['Date'] = pd.to_datetime(df['Date'], format="mixed")
         df.to_csv('Active_Testing.csv')
         #rows ans columns
-        print(df.columns)
-        print(df.info())
-        df_plt = df[['Date', 'Value']]
-        df_plt.plot()
-        plt.show()
+        #print(df.columns)
+        #print(df.info())
+        #df_plt = df[['Date', 'Value']]
+        #df_plt.plot()
+        #plt.show()
         
         
 
