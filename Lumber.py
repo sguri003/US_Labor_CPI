@@ -27,6 +27,8 @@ class US_Lumber:
         #Fire Post to end point BLS Grab Json
         post = requests.post('https://api.bls.gov/publicAPI/v2/timeseries/data/', data = parameters, headers = headers)
         json_data = json.loads(post.text)
+        with open('Lumber_Raw_File.json', 'w')as f_l:
+            json.dump(json_data, f_l, indent=4)
         return json_data
     
     #Pull Active Labor Force ages 16-65 years old
@@ -40,7 +42,7 @@ class US_Lumber:
         #open file to be written to CSV. 
         with open(self.out_file_nm, mode = 'w', newline = '') as data_file:
             #Series ID is category such as Gasoline, Groceries. 
-            fieldnames = ['Series ID', 'Year', 'Value', 'Annual Percent Change']
+            fieldnames = ['Series ID', 'Date', 'Value', 'Annual Percent Change']
             d_wrtr = csv.writer(data_file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_ALL)
             #Place Headers
             d_wrtr.writerow(fieldnames)
@@ -64,6 +66,7 @@ class US_Lumber:
         #Write into data frame format.
         dt = pd.read_csv(self.out_file_nm)
         df = pd.DataFrame(data=dt)
-        df.to_csv('DataFrame_Lumber.csv')
+        df['Date'] = pd.to_datetime(df['Date'], format="mixed")
+        df.to_csv('Lumber_DataFrame.csv')
         print(df)
     

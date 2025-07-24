@@ -16,6 +16,7 @@ class Power_Delivery:
         parameters = json.dumps({'seriesid' : series_id, 'startyear' : start_year, 'endyear' : end_year, 'calculations' : True , 'registrationkey' : reg_key})
         # Get data in JSON format and then write it to a CSV file.
         json_data = self.get_PD(headers, parameters)
+        self.get_PD(headers, parameters)
         #@param json data for power delivery sector output
         self.get_energy(json_data)
         

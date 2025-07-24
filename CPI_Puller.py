@@ -43,7 +43,7 @@ class CPI_Puller:
         #open file to be written to CSV. 
         with open(self.out_file_nm, mode = 'w', newline = '') as data_file:
             #Series ID is category such as Gasoline, Groceries. 
-            fieldnames = ['Series ID', 'Month', 'Value', 'Annual Percent Change']
+            fieldnames = ['Series ID', 'Date', 'Value', 'Annual Percent Change']
             d_wrtr = csv.writer(data_file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_ALL)
             #Place Headers
             d_wrtr.writerow(fieldnames)
@@ -67,4 +67,6 @@ class CPI_Puller:
         #place in dataframe format from
         dt = pd.read_csv(self.out_file_nm)
         df_cpi = pd.DataFrame(data=dt)
+        df_cpi['Date'] = pd.to_datetime(dt['Date'], format="mixed")
+        df_cpi.to_csv("CPI_DataFrame.csv")
         print(df_cpi)
