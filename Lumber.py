@@ -67,6 +67,6 @@ class US_Lumber:
         dt = pd.read_csv(self.out_file_nm)
         df = pd.DataFrame(data=dt)
         df['Date'] = pd.to_datetime(df['Date'], format="mixed")
-        df.to_csv('Lumber_DataFrame.csv')
+        df.to_csv('Lumber_Frame_2010-Current.csv')
         print(df)
     

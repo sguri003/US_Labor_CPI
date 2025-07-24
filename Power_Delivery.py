@@ -6,6 +6,8 @@ import os
 import json
 import csv
 import requests
+import numpy as np      
+import pandas as pd 
 
 class Power_Delivery:
     #CONSTRUCTOR FOR POWER DELIVERY. 
@@ -49,5 +51,9 @@ class Power_Delivery:
                     period_name = item['periodName']
                     value = item['value']
                     d_wrtr.writerow([series_id, year, value])
+        dt = pd.read_csv(self.out_file_nm)
+        labor_df = pd.DataFrame(data=dt)
+        labor_df.to_csv('PD_DataFrame_10_Years.csv')
+            
                     
     

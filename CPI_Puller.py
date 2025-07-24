@@ -68,5 +68,5 @@ class CPI_Puller:
         dt = pd.read_csv(self.out_file_nm)
         df_cpi = pd.DataFrame(data=dt)
         df_cpi['Date'] = pd.to_datetime(dt['Date'], format="mixed")
-        df_cpi.to_csv("CPI_DataFrame.csv")
+        df_cpi.to_csv("CPI_2010_Current_Frame.csv")
         print(df_cpi)

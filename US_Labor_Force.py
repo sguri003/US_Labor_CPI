@@ -68,7 +68,7 @@ class US_Labor_Force:
         dt = pd.read_csv(self.out_file_nm)
         df = pd.DataFrame(data=dt)
         df['Date'] = pd.to_datetime(df['Date'], format="mixed")
-        df.to_csv('Active_Workfroce.csv')   
+        df.to_csv('US_Labor_Force_2010_Current_Frame.csv')   
         #rows ans columns
         #print(df.columns)
         #print(df.info())
