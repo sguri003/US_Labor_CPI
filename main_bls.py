@@ -34,11 +34,11 @@ Power_Delivery = Power_Delivery(BLS_API_KEY, 'POWER_OUTPUT_2015-MTD.csv'
 # 16 years and older and under 65 years old all civilians
 #Pay and Benefits NBU20530000000000033030
 Labor = US_Labor_Force(BLS_API_KEY, 'Labor_Force_2015-MTD.csv'
-                                ,['LNS11000000']
+                                ,['LNS11000000','LNS12000000']
                                 , 2015, 2025 )
 
-Labor = US_Labor_Force(BLS_API_KEY, 'Employment_2015_MTD.csv'
-                                ,['LNS12000000']
+Labor = US_Labor_Force(BLS_API_KEY, 'Employee_Data2015-MTD.csv'
+                                ,['CES0500000003',' CES0000000001']
                                 , 2015, 2025 )
 #PCU321991321991  Manufactured home, mobile home, manufacturing
 Lumber = US_Lumber(BLS_API_KEY, 'LUMBER_HOUSES_2015-MTD.csv',
