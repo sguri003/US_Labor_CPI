@@ -29,7 +29,7 @@ CPI_Data = CPI_Puller(BLS_API_KEY, 'CPI_2015-MTD.csv',
                         , 2010, 2025)
 Power_Delivery = Power_Delivery(BLS_API_KEY, 'POWER_OUTPUT_2015-MTD.csv'
                                 ,['IPUCN2211__T051000000', 'IPUCN2211__T011000000']
-                                , 2010, 2025 )
+                                , 2015, 2025 )
 # Labor Civilian Workforce code: LNS11000000, Employment code: LNS12000000
 # 16 years and older and under 65 years old all civilians
 #Pay and Benefits NBU20530000000000033030

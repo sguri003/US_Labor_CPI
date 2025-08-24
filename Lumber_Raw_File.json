@@ -1,7 +1,9 @@
 {
     "status": "REQUEST_SUCCEEDED",
-    "responseTime": 89,
-    "message": [],
+    "responseTime": 193,
+    "message": [
+        "BLS does not produce net change calculations for Series PCU321991321991"
+    ],
     "Results": {
         "series": [
             {
@@ -9,9 +11,30 @@
                 "data": [
                     {
                         "year": "2025",
+                        "period": "M07",
+                        "periodName": "July",
+                        "latest": "true",
+                        "value": "494.781",
+                        "footnotes": [
+                            {
+                                "code": "P",
+                                "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+                            }
+                        ],
+                        "calculations": {
+                            "net_changes": {},
+                            "pct_changes": {
+                                "1": "-0.4",
+                                "3": "-0.3",
+                                "6": "0.8",
+                                "12": "0.8"
+                            }
+                        }
+                    },
+                    {
+                        "year": "2025",
                         "period": "M06",
                         "periodName": "June",
-                        "latest": "true",
                         "value": "496.743",
                         "footnotes": [
                             {
@@ -77,10 +100,7 @@
                         "periodName": "March",
                         "value": "492.503",
                         "footnotes": [
-                            {
-                                "code": "P",
-                                "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
-                            }
+                            {}
                         ],
                         "calculations": {
                             "net_changes": {},
