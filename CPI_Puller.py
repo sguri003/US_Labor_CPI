@@ -11,7 +11,8 @@ import json
 import csv
 import requests
 import numpy as np                
-import pandas as pd                   
+import pandas as pd    
+             
 #new comming
 class CPI_Puller:
     #CONSTRUCTOR APsI KEY, OUTPUT FILE, START AND END YEAR
@@ -70,3 +71,5 @@ class CPI_Puller:
         df_cpi['Date'] = pd.to_datetime(dt['Date'], format="mixed")
         df_cpi.to_csv("CPI_2010_Current_Frame.csv")
         print(df_cpi)
+     
+        

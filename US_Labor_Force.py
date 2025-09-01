@@ -9,7 +9,6 @@ import csv
 import requests
 import numpy as np    
 import pandas as pd     
-import matplotlib.pylab as plt
 import re
 
 
@@ -69,12 +68,6 @@ class US_Labor_Force:
         df = pd.DataFrame(data=dt)
         df['Date'] = pd.to_datetime(df['Date'], format="mixed")
         df.to_csv('US_Labor_Force_2010_Current_Frame.csv')   
-        #rows ans columns
-        #print(df.columns)
-        #print(df.info())
-        #df_plt = df[['Date', 'Value']]
-        #df_plt.plot()
-        #plt.show()
         
         
 
