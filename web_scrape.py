@@ -8,9 +8,8 @@ print(type(source))
 #print(source.keys())
 #print(source['Meta Data'])
 for k, v in source['Time Series (Daily)'].items():
-    #print(f"Key: {k}")
-    #print(f"{v}")
-    if re.search("\d+[.]\d+" , str(v)):
+    print(v)
+    if re.search("high:" , str(v)):
         print(v)
     else:
         break
