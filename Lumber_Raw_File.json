@@ -1,6 +1,6 @@
 {
     "status": "REQUEST_SUCCEEDED",
-    "responseTime": 122,
+    "responseTime": 92,
     "message": [
         "BLS does not produce net change calculations for Series PCU321991321991"
     ],

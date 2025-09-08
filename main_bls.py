@@ -24,24 +24,24 @@ BLS_API_KEY = df_ky['BLS_API'][0]
 #bls_dt = labor_US(BLS_API_KEY, 'POWER DELIVER SG.CSV' , ['IPUCN2211__T051000000', 'IPUCN2211__T011000000'], 2000, 2022 )
 #CPI for Gas, Groceries, necessities. 
 #CPI-->CUSR0000SA0 ALL URBAN AREAS
-CPI_Data = CPI_Puller(BLS_API_KEY, 'CPI_2015-MTD.csv',
+CPI_Data = CPI_Puller(BLS_API_KEY, 'CPI_2015-2025_Aug.csv',
                         ['CUSR0000SA0', 'CUSR0000SETB01', 'CUSR0000SAF1', 'CUSR0000SETA02']
                         , 2010, 2025)
-Power_Delivery = Power_Delivery(BLS_API_KEY, 'POWER_OUTPUT_2015-MTD.csv'
+Power_Delivery = Power_Delivery(BLS_API_KEY, 'POWER_OUTPUT_2015-2025_Aug.csv'
                                 ,['IPUCN2211__T051000000', 'IPUCN2211__T011000000']
                                 , 2015, 2025 )
 # Labor Civilian Workforce code: LNS11000000, Employment code: LNS12000000
 # 16 years and older and under 65 years old all civilians
 #Pay and Benefits NBU20530000000000033030
-Labor = US_Labor_Force(BLS_API_KEY, 'Labor_Force_2015-MTD.csv'
+Labor = US_Labor_Force(BLS_API_KEY, 'Labor_Force_2015-2025_Aug.csv'
                                 ,['LNS11000000','LNS12000000']
                                 , 2015, 2025 )
 
-Labor = US_Labor_Force(BLS_API_KEY, 'Employee_Data2015-MTD.csv'
-                                ,['CES0500000003',' CES0000000001']
+Labor = US_Labor_Force(BLS_API_KEY, 'Employee_Data2015-2025_Aug.csv'
+                                ,['CES0500000003',' CES0000000001', 'JTU110099000000000HIL']
                                 , 2015, 2025 )
 #PCU321991321991  Manufactured home, mobile home, manufacturing
-Lumber = US_Lumber(BLS_API_KEY, 'LUMBER_HOUSES_2015-MTD.csv',
+Lumber = US_Lumber(BLS_API_KEY, 'LUMBER_HOUSES_2015-2025_Aug.csv',
                 ['PCU321991321991'], 2015, 2025)
 
 
