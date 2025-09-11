@@ -24,8 +24,8 @@ BLS_API_KEY = df_ky['BLS_API'][0]
 #bls_dt = labor_US(BLS_API_KEY, 'POWER DELIVER SG.CSV' , ['IPUCN2211__T051000000', 'IPUCN2211__T011000000'], 2000, 2022 )
 #CPI for Gas, Groceries, necessities. 
 #CPI-->CUSR0000SA0 ALL URBAN AREAS
-CPI_Data = CPI_Puller(BLS_API_KEY, 'CPI_2015-2025_Aug.csv',
-                        ['CUSR0000SA0', 'CUSR0000SETB01', 'CUSR0000SAF1', 'CUSR0000SETA02']
+CPI_Data = CPI_Puller(BLS_API_KEY, 'CPI_2015-Testing.csv',
+                        ['CUSR0000SA0','CUSR0000SETB01', 'CUSR0000SAF1', 'CUSR0000SETA02']
                         , 2010, 2025)
 Power_Delivery = Power_Delivery(BLS_API_KEY, 'POWER_OUTPUT_2015-2025_Aug.csv'
                                 ,['IPUCN2211__T051000000', 'IPUCN2211__T011000000']

@@ -1,6 +1,6 @@
 {
     "status": "REQUEST_SUCCEEDED",
-    "responseTime": 92,
+    "responseTime": 101,
     "message": [
         "BLS does not produce net change calculations for Series PCU321991321991"
     ],
@@ -11,10 +11,31 @@
                 "data": [
                     {
                         "year": "2025",
+                        "period": "M08",
+                        "periodName": "August",
+                        "latest": "true",
+                        "value": "494.834",
+                        "footnotes": [
+                            {
+                                "code": "P",
+                                "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
+                            }
+                        ],
+                        "calculations": {
+                            "net_changes": {},
+                            "pct_changes": {
+                                "1": "0.0",
+                                "3": "-0.3",
+                                "6": "0.7",
+                                "12": "1.0"
+                            }
+                        }
+                    },
+                    {
+                        "year": "2025",
                         "period": "M07",
                         "periodName": "July",
-                        "latest": "true",
-                        "value": "494.781",
+                        "value": "494.834",
                         "footnotes": [
                             {
                                 "code": "P",
@@ -35,7 +56,7 @@
                         "year": "2025",
                         "period": "M06",
                         "periodName": "June",
-                        "value": "496.743",
+                        "value": "496.738",
                         "footnotes": [
                             {
                                 "code": "P",
@@ -56,7 +77,7 @@
                         "year": "2025",
                         "period": "M05",
                         "periodName": "May",
-                        "value": "496.546",
+                        "value": "496.544",
                         "footnotes": [
                             {
                                 "code": "P",
@@ -79,10 +100,7 @@
                         "periodName": "April",
                         "value": "496.478",
                         "footnotes": [
-                            {
-                                "code": "P",
-                                "text": "Preliminary. All indexes are subject to monthly revisions up to four months after original publication."
-                            }
+                            {}
                         ],
                         "calculations": {
                             "net_changes": {},
