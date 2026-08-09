@@ -29,6 +29,8 @@ class US_Lumber:
         if post.status_code != 200:
             raise RuntimeError(f"BLS API returned {post.status_code}: {post.text[:200]}")
         json_data = json.loads(post.text)
+        with open('Lumber_Raw_File.json', 'w')as f_l:
+            json.dump(json_data, f_l, indent=4)
         return json_data
     
     #Pull Active Labor Force ages 16-65 years old
@@ -42,7 +44,7 @@ class US_Lumber:
         #open file to be written to CSV. 
         with open(self.out_file_nm, mode = 'w', newline = '') as data_file:
             #Series ID is category such as Gasoline, Groceries. 
-            fieldnames = ['Series ID', 'Year', 'Value', 'Annual Percent Change']
+            fieldnames = ['Series ID', 'Date', 'Value', 'Annual Percent Change']
             d_wrtr = csv.writer(data_file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_ALL)
             #Place Headers
             d_wrtr.writerow(fieldnames)
@@ -66,5 +68,7 @@ class US_Lumber:
         #Write into data frame format.
         dt = pd.read_csv(self.out_file_nm)
         df = pd.DataFrame(data=dt)
+        df['Date'] = pd.to_datetime(df['Date'], format="mixed")
+        df.to_csv('Lumber_Frame_2010-Current.csv')
         print(df)
     

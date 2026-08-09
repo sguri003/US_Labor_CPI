@@ -11,7 +11,8 @@ import json
 import csv
 import requests
 import numpy as np                
-import pandas as pd                   
+import pandas as pd    
+             
 #new comming
 class CPI_Puller:
     #CONSTRUCTOR APsI KEY, OUTPUT FILE, START AND END YEAR
@@ -22,6 +23,8 @@ class CPI_Puller:
         parameters = json.dumps({'seriesid' : series_id, 'startyear' : start_year, 'endyear' : end_year, 'calculations' : True , 'registrationkey' : reg_key})
         # Get data in JSON format and then write it to a CSV file.
         json_data = self.get_cpi(headers, parameters)
+        #with open('CPI_QA.json' , 'w') as qa:
+            #json.dump(json_data, fp=qa, indent=4)
         self.data_to_csv(json_data)
         
         
@@ -45,7 +48,7 @@ class CPI_Puller:
         #open file to be written to CSV. 
         with open(self.out_file_nm, mode = 'w', newline = '') as data_file:
             #Series ID is category such as Gasoline, Groceries. 
-            fieldnames = ['Series ID', 'Month', 'Value', 'Annual Percent Change']
+            fieldnames = ['Series ID', 'Date', 'Value', 'Annual Percent Change']
             d_wrtr = csv.writer(data_file, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_ALL)
             #Place Headers
             d_wrtr.writerow(fieldnames)
@@ -60,6 +63,7 @@ class CPI_Puller:
                     # Get the 12-month change
                     calculations = item['calculations']
                     pct_changes = calculations['pct_changes']
+                    #get the 12th month in the JSON:
                     annual_pct_chg = pct_changes['12']
                     # Create a month field in the format of a date for 
                     # the first day of each month (for example: January 1, 2022).
@@ -69,4 +73,16 @@ class CPI_Puller:
         #place in dataframe format from
         dt = pd.read_csv(self.out_file_nm)
         df_cpi = pd.DataFrame(data=dt)
+        df_cpi['Date'] = pd.to_datetime(dt['Date'], format="mixed")
+        df_cpi.to_csv("CPI_2010_Current_Frame.csv")
         print(df_cpi)
+
+
+#df_ky = pd.read_csv('API_KEY.csv')
+#BLS_API_KEY = df_ky['BLS_API'][0]         
+#CPI_Data = CPI_Puller(BLS_API_KEY, 'CPI_QA.csv',
+#                       ['CUSR0000SETB01', 'CUSR0000SAF1', 'CUSR0000SETA02']
+#                         ,2010, 2025)
+#CPI_Data = CPI_Puller(BLS_API_KEY, 'CPI_QA.csv',
+#                        ['CUSR0000SA0','CUSR0000SETB01', 'CUSR0000SAF1', 'CUSR0000SETA02']
+#                         ,2010, 2025)

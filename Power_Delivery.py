@@ -6,6 +6,8 @@ import os
 import json
 import csv
 import requests
+import numpy as np      
+import pandas as pd 
 
 class Power_Delivery:
     #CONSTRUCTOR FOR POWER DELIVERY. 
@@ -16,6 +18,7 @@ class Power_Delivery:
         parameters = json.dumps({'seriesid' : series_id, 'startyear' : start_year, 'endyear' : end_year, 'calculations' : True , 'registrationkey' : reg_key})
         # Get data in JSON format and then write it to a CSV file.
         json_data = self.get_PD(headers, parameters)
+        self.get_PD(headers, parameters)
         #@param json data for power delivery sector output
         self.get_energy(json_data)
         
@@ -50,5 +53,9 @@ class Power_Delivery:
                     period_name = item['periodName']
                     value = item['value']
                     d_wrtr.writerow([series_id, year, value])
+        dt = pd.read_csv(self.out_file_nm)
+        labor_df = pd.DataFrame(data=dt)
+        labor_df.to_csv('PD_DataFrame_10_Years.csv')
+            
                     
     

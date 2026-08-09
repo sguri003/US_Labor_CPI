@@ -1,9 +1,18 @@
 import json
 import requests
-import seaborn
+import re 
+fin_data = requests.get("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=demo")
+#print(fin_data)
+source = fin_data.json()
+print(type(source))
+#print(source.keys())
+#print(source['Meta Data'])
+for k, v in source['Time Series (Daily)'].items():
+    print(v)
+    if re.search("high:" , str(v)):
+        print(v)
+    else:
+        break
+    
 
-with requests("'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=IBM&apikey=demo") as response:
-    source = response.read()
 
-data = json.loads(source)
-print(data)
