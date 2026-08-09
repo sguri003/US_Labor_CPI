@@ -26,6 +26,8 @@ class US_Lumber:
     def get_lumber(self, headers, parameters):
         #Fire Post to end point BLS Grab Json
         post = requests.post('https://api.bls.gov/publicAPI/v2/timeseries/data/', data = parameters, headers = headers)
+        if post.status_code != 200:
+            raise RuntimeError(f"BLS API returned {post.status_code}: {post.text[:200]}")
         json_data = json.loads(post.text)
         return json_data
     
