@@ -8,6 +8,12 @@ description: Use when adding a new economic-data source (BLS, BEA, EIA, or simil
 ## Overview
 GDS Data Solutions project pulling US economic/labor data (BLS, BEA, EIA) into CSVs for analysis. Location: `US_Labor_CPI/US_Labor_CPI/`. Open source: github.com/sguri003/Labor_Stats_Dev.
 
+## Folder layout (as of 2026-08-09 reorg)
+- `scripts/` — all Python code, including a shared `paths.py` (`PROJECT_ROOT`, `DATA_DIR`, `SECRETS_DIR`, resolved via `Path(__file__)` so it works regardless of invocation cwd). Every script imports what it needs from `paths` rather than using bare filenames.
+- `data_exports/` — all CSV/output data (pull results, generated frames, charts). Anything a puller writes goes here via `DATA_DIR`.
+- `secrets/` — `API_KEY.csv` only. Gitignored (`secrets/` as a whole, per [[feedback_gitignore_secrets_proactively]]). Read via `SECRETS_DIR`.
+- Loose reference files (`states.json`, `new_states.json`, `state_format.json`) stay at the project root — not exports, not secrets — referenced via `PROJECT_ROOT` from `dict_qa.py`.
+
 ## Puller class pattern
 One class per data source, one file per class:
 - Constructor: `(reg_key, out_file_nm, series_id/params, start_year, end_year)` — kicks off the pull and write in `__init__`.
@@ -19,7 +25,7 @@ One class per data source, one file per class:
 - `*_to_csv`/`write_csv` method: deletes any existing output file first (prints whether it existed), writes CSV with `csv.QUOTE_ALL`.
 
 ## API keys
-All keys live in one `API_KEY.csv` at the project root, one column per source (`BLS_API`, `BAE_KEY`, `EIA_KEY` — names as the user set them, don't "fix" the BEA typo). Read with `pd.read_csv('API_KEY.csv')['<COLUMN>'][0]`.
+All keys live in one `secrets/API_KEY.csv`, one column per source (`BLS_API`, `BAE_KEY`, `EIA_KEY` — names as the user set them, don't "fix" the BEA typo). Read with `pd.read_csv(SECRETS_DIR / 'API_KEY.csv')['<COLUMN>'][0]`.
 
 ## Source-specific request shapes
 - **BLS** (`api.bls.gov/publicAPI/v2/timeseries/data/`): single POST endpoint for all series, `seriesid` is a list, JSON body via `json.dumps(...)`, param key is `registrationkey`.

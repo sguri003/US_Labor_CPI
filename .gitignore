@@ -1,3 +1,3 @@
-API_KEY.csv
+secrets/
 .venv/
 __pycache__/
