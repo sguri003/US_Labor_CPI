@@ -14,9 +14,12 @@ class EIA_Electricity:
     BASE_URL = 'https://api.eia.gov/v2/electricity'
 
     #CONSTRUCTOR FOR EIA ELECTRICITY PRICE/USAGE/OUTPUT PULL
-    def __init__(self, reg_key, out_file_nm, years_back = 10):
+    #state: EIA state code, e.g. 'US' for national total or 'FL' for Florida.
+    #prefer the for_us()/for_florida() methods below over calling this directly.
+    def __init__(self, reg_key, out_file_nm, years_back = 10, state = 'US'):
         self.reg_key = reg_key
         self.out_file_nm = out_file_nm
+        self.state = state
         now = datetime.now()
         start = f'{now.year - years_back}-{now.month:02d}'
         end = f'{now.year}-{now.month:02d}'
@@ -25,7 +28,17 @@ class EIA_Electricity:
         self.write_csv(price_usage, output)
         self.plot_trends()
 
-    #retail price (cents/kWh) and usage/sales (million kWh), US total, all sectors
+    #explicit entry point for the national pull
+    @classmethod
+    def for_us(cls, reg_key, out_file_nm, years_back = 10):
+        return cls(reg_key, out_file_nm, years_back = years_back, state = 'US')
+
+    #explicit entry point for the Florida pull
+    @classmethod
+    def for_florida(cls, reg_key, out_file_nm, years_back = 10):
+        return cls(reg_key, out_file_nm, years_back = years_back, state = 'FL')
+
+    #retail price (cents/kWh) and usage/sales (million kWh), all sectors, for self.state
     def get_price_and_usage(self, start, end):
         params = {
             'api_key': self.reg_key,
@@ -33,7 +46,7 @@ class EIA_Electricity:
             'data[0]': 'price',
             'data[1]': 'sales',
             'facets[sectorid][]': 'ALL',
-            'facets[stateid][]': 'US',
+            'facets[stateid][]': self.state,
             'start': start,
             'end': end,
             'sort[0][column]': 'period',
@@ -42,14 +55,14 @@ class EIA_Electricity:
         }
         return self._get(f'{self.BASE_URL}/retail-sales/data/', params)
 
-    #generation/output (thousand MWh), US total, all sectors, all fuel types
+    #generation/output (thousand MWh), all sectors, all fuel types, for self.state
     def get_output(self, start, end):
         params = {
             'api_key': self.reg_key,
             'frequency': 'monthly',
             'data[0]': 'generation',
             'facets[fueltypeid][]': 'ALL',
-            'facets[location][]': 'US',
+            'facets[location][]': self.state,
             'facets[sectorid][]': '99',
             'start': start,
             'end': end,
@@ -141,7 +154,48 @@ class EIA_Electricity:
         plt.setp(axes[-1].get_xticklabels(), rotation = 45, ha = 'right')
 
         axes[-1].set_xlabel('Month', color = '#52514e', fontsize = 9)
-        fig.suptitle('US Electricity Price, Usage, and Output — Trailing 10 Years', color = '#0b0b0b', fontsize = 13)
+        fig.suptitle(f'{self.state} Electricity Price, Usage, and Output — Trailing 10 Years', color = '#0b0b0b', fontsize = 13)
         fig.tight_layout(rect = [0, 0, 1, 0.96])
-        fig.savefig(DATA_DIR / 'Electricity_Trends.png', dpi = 150, facecolor = fig.get_facecolor())
+        fig.savefig(DATA_DIR / f'Electricity_Trends_{self.state}.png', dpi = 150, facecolor = fig.get_facecolor())
+        plt.show()
+
+    #standalone single-series chart of just the kWh price - separate from plot_trends
+    #since that one is small multiples across three incompatible-scale metrics
+    def plot_price_only(self):
+        df = pd.read_csv(self.out_file_nm)
+        df['Month'] = pd.to_datetime(df['Month'], format = '%Y-%m')
+        last_row = df.iloc[-1]
+
+        surface = '#fcfcfb'
+        color = '#2a78d6'
+
+        sns.set_style('white')
+        fig, ax = plt.subplots(figsize = (10, 4.5), facecolor = surface)
+        ax.set_facecolor(surface)
+
+        sns.lineplot(data = df, x = 'Month', y = 'Price (cents per kWh)', ax = ax, color = color, linewidth = 2)
+        ax.set_title(f'{self.state} Electricity Price — Trailing 10 Years', color = '#0b0b0b', fontsize = 13, loc = 'left')
+        ax.set_ylabel('Price (cents per kWh)', color = '#52514e', fontsize = 9)
+        ax.set_xlabel('Month', color = '#52514e', fontsize = 9)
+        ax.grid(True, color = '#e1e0d9', linewidth = 1)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_color('#c3c2b7')
+        ax.spines['bottom'].set_color('#c3c2b7')
+        ax.tick_params(colors = '#898781', labelsize = 8)
+
+        ax.set_xlim(right = last_row['Month'] + pd.Timedelta(days = 200))
+        ax.annotate(
+            f"{last_row['Price (cents per kWh)']:.2f}¢",
+            xy = (last_row['Month'], last_row['Price (cents per kWh)']),
+            xytext = (6, 0), textcoords = 'offset points',
+            color = '#0b0b0b', fontsize = 10, fontweight = 'bold', va = 'center',
+        )
+
+        ax.xaxis.set_major_locator(mdates.MonthLocator(bymonth = [1, 4, 7, 10]))
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+        plt.setp(ax.get_xticklabels(), rotation = 45, ha = 'right')
+
+        fig.tight_layout()
+        fig.savefig(DATA_DIR / f'Electricity_Price_{self.state}.png', dpi = 150, facecolor = fig.get_facecolor())
         plt.show()
